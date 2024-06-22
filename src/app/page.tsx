@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import List from "./components/List";
 
 type Person = {
   name: string;
@@ -54,18 +55,18 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div>
-      <h1>People with Brown Hair</h1>
-      <ul>
-        {getPeople && getPeople.map((person) => (
-          <li key={person.name}>
-            <p>Name: {person.name}</p>
-            <p>Eye Color: {person.eye_color}</p>
-            <p>Homeworld: {getHomeWorld[person.homeworld]}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+     <section className="text-gray-600 body-font">
+        <div className="container px-5  mx-auto">
+            <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">People with Brown Hair</h1>
+             </div>
+             <div className="flex flex-wrap -m-4">
+              {getPeople && getPeople.map((person , index ) => (
+              <List key={index} personName={person.name} eyeColor = {person.eye_color} homeWorld={getHomeWorld[person.homeworld]}/>
+            ))}
+            </div>
+   </div>
+    </section>  
     </main>
   );
 }
