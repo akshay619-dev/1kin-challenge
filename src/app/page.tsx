@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
-import styles from "./page.module.css";
 import List from "./components/List";
+import styles from "./page.module.css";
 
 type Person = {
   name: string;
@@ -15,7 +15,6 @@ type Person = {
 export default function Home() {
 
   const [getPeople , setPeople] = useState<Person[]>([])
-  const [getHomeWorld , setHomeWorld ] = useState<{ [key: string]: string }>({})
   useEffect(() => {
     const fetchPeopleData = async () => {
 
@@ -44,9 +43,6 @@ export default function Home() {
 
     fetchPeopleData()
   }, []);
-
-
-  
 
   return (
     <main className={styles.main}>
