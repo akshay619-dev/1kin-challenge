@@ -22,30 +22,25 @@ export default function Home() {
       try{
       const response = await fetch("https://swapi.dev/api/people");
       const data = await response.json();
-      console.log("data: ", data);
-      const peopleWithBrownHair = data.results.filter((person:Person) => person.hair_color.includes('brown'));
-      setPeople(data.results)
-    
-      
-      const homeworldPromises = peopleWithBrownHair.map((person:Person) =>
-        fetch(person.homeworld).then((res) => res.json())
+     // console.log("data: ", data);
+          const peopleWithBrownHair = data.results.filter((person:Person) =>  
+            person.hair_color &&
+            person.hair_color.toLowerCase() !== 'none' &&
+            person.hair_color.toLowerCase() !== 'n/a' &&
+            person.hair_color.toLowerCase().includes('brown')
+        );
+       const peopleWithHomeworld = await Promise.all(
+        peopleWithBrownHair.map(async (person: Person) => {
+          const homeworldData = await fetch(person.homeworld).then((res) => res.json());
+          return { ...person, homeworld: homeworldData.name };
+        })
       );
-    
+      setPeople(peopleWithHomeworld)
       
-      const homeworldData = await Promise.all(homeworldPromises);
-    
-      const homeworldName = homeworldData.reduce((acc, homeworld) => {
-        acc[homeworld.url] = homeworld.name;
-        return acc
-      });
-    
-      setHomeWorld(homeworldName)
-    
     } catch (error) {
       console.error('Error fetching data:', error);
     }
     } 
-
 
     fetchPeopleData()
   }, []);
@@ -62,7 +57,7 @@ export default function Home() {
              </div>
              <div className="flex flex-wrap -m-4">
               {getPeople && getPeople.map((person , index ) => (
-              <List key={index} personName={person.name} eyeColor = {person.eye_color} homeWorld={getHomeWorld[person.homeworld]}/>
+              <List key={index} personName={person.name} eyeColor = {person.eye_color} homeWorld={person.homeworld} hairColor={person.hair_color}/>
             ))}
             </div>
    </div>
