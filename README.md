@@ -11,8 +11,13 @@ This project displays the name, eye color, and homeworld of people with "brown" 
 
 Follow these instructions to set up and run the project locally.
 
-### 1. Extract the zip file
+### 1. Extract the zip file or clone the repository
 
+```sh
+git clone https://github.com/akshay619-dev/1kin-challenge.git
+
+cd 1kin-challenge
+```
 
 ### 2. Install Dependencies
 
